@@ -1,87 +1,121 @@
 #include<stdio.h>
 #include<stdlib.h>
  
- int main()
- {
-    int f1=1,f2=1,i;
-        for(i=1;i<=20;i++)
-            {
-                printf("%-12d%-12d",f1,f2);
-                if(i%2==0) printf("\n");
-                f1=f1+f2;
-                f2=f1+f2;
-            }
-    return 0;
- }
 
 typedef struct rabbit_node
 {
     int months_old;
-    int rabbit_ID;
-    struct rabbit_node *next
+    double ID;
+    struct rabbit_node* next;
 }rabbit_node;
 
+void Add_rabbit_at (rabbit_node* head);
+void Add_onemonth (rabbit_node* current,rabbit_node* head);
+void Born_babby (rabbit_node* current, rabbit_node* head);
+void For_eachnode_run(rabbit_node* head,void(*fun)(rabbit_node* current,rabbit_node* head));
+void Init_node (rabbit_node* head);
+void show_node_number(rabbit_node* head);
 
-/*在尾部新增一个结点*/
-/*形参为指向当前结点的指针*/
-/**/
-void Add_rabbit_at (rabbit_node* current)
+
+/*
+typedef struct head_node
 {
-    struct rabbit_node* new;
-    new=(rabbit_node*)malloc(sizeof(rabbit_node));
-    new.months_old=0;
-    new.rabbit_ID=current.rabbit_ID+1;
-    new.next=NULL;
-    current.next=new;
+    struct rabbit_node *next
+};
+*/
+/*在尾部新增一个结点*/
+/*形参为指向链表的某结点的指针*/
+/**/
+void Add_rabbit_at (rabbit_node* head)
+{
+    struct rabbit_node* pnew_node;
+    pnew_node=(rabbit_node*)malloc(sizeof(rabbit_node));
+    struct rabbit_node* current;
+    current=(rabbit_node*)malloc(sizeof(rabbit_node));
+    current=head;
+    while(current->next!=NULL)
+    {
+        current=current->next;
+    }
+
+    pnew_node->months_old=0;
+    pnew_node->ID=current->ID+1;
+    pnew_node->next=NULL;
+    current->next=pnew_node;
+    
 } 
 
 /*当前结点months_old增加一*/
 /*形参为指向当前结点的指针*/
-/*f:ff*/
-void Add_onemonth (rabbit_node* current)
+/**/
+void Add_onemonth (rabbit_node* current,rabbit_node* head)
 {
-    current.months_old=current.months_old+1;
+    current->months_old=current->months_old+1;
+}
+/*months_old>=3增加一个结点*/
+/*形参为当前结点，头结点*/
+void Born_babby (rabbit_node* current, rabbit_node* head)
+{
+    if (current->months_old>=3)
+        Add_rabbit_at (head);    
+} 
+
+
+/*对某一链表的全体成员执行某一函数*/
+/*形参为链表头指针，函数指针*/
+void For_eachnode_run(rabbit_node* head,void(*fun)(rabbit_node* current,rabbit_node* head))
+{
+    struct rabbit_node* current;
+    current=(rabbit_node*)malloc(sizeof(rabbit_node));
+    current=head;
+    while(current->next!=NULL)
+    {
+        current=current->next;
+        fun(current,head);
+
+    }
+ //   free(current);
+
 }
 
-/*对某一*/
-void For_eachnode_run()
+/*初始化当前结点*/
+/*形参为链表表头指针*/
+/**/
+void Init_node (rabbit_node* head)
 {
-
+    head->ID=0;
+    head->months_old=0;
+    head->next=NULL;
 }
 
+/*显示链表包含结点个数*/
+/*形参为链表头指针*/
+/**/
+void show_node_number(rabbit_node* head)
+{
+
+    struct rabbit_node* current;
+    current=(rabbit_node*)malloc(sizeof(rabbit_node));
+    current=head;
+    while(current->next!=NULL)
+    {
+        current=current->next;
+    }
+    printf("%f\n",current->ID);
+  //  free(current);
+}
 
 int main(int argc,char *argv[])
 {
-    int i=0;
-    struct sf xx[8];
-    fc *yy;
-    
-    for(i=0;i<8;i++)
+    struct rabbit_node* head;
+    Init_node(head);
+    Add_rabbit_at(head);
+    for(int i=1;i<=40;i++)
     {
-        xx[i].n=i;
-        (*(xx+i)).c='a'+i;
-    }//abcdefgh
-    for(i--;i>-1;i--)
-        printf("%d%c ",(*(xx+i)).n,xx[i].c);
-    puts("");
-
-    yy=(fc*)malloc(10*sizeof(fc));
-    if(yy==NULL)
-    {
-        puts("Memory allocation failed.");
-        exit(EXIT_FAILURE);
-    }//申请失败则提示并退出程序
-
-    for(i=0;i<10;i++)
-    {
-        yy[i].n=i;
-        (*(yy+i)).c='A'+i;
+        For_eachnode_run(head,Add_onemonth);
+        For_eachnode_run(head,Born_babby);
+        show_node_number(head);
     }
 
-    for(i--;i>-1;i--)
-        printf("%d%c ",(*(yy+i)).n,yy[i].c);
-    free(yy);
-    puts("");
-
-    return 1;
+    
 }
