@@ -1,4 +1,5 @@
-﻿#include<stdio.h>
+﻿#include "stdafx.h"
+#include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
 #include "list.h"
@@ -26,15 +27,15 @@ int main(void)
 
 	/*运行判断输出结果*/
 	Node* scan;
-	double sum_of_cubes;
-	for (double i = 0; i<MaxSize_num; i++)
+	double sum_of_cubes=0;
+	for (double i = 1; i<MaxSize_num; i++)
 	{
 		create_bitNum_chain(&Variable_bitNum_chain, i);
 
 		scan = Variable_bitNum_chain;
-		while (scan->next != NULL)
+		while (scan != NULL)
 		{
-			sum_of_cubes = sum_of_cubes + pow(scan->item.bit_is_what, 3);
+			sum_of_cubes = sum_of_cubes + pow(scan->item.bit_is_what,3);
 			scan = scan->next;
 		}
 		if (i == sum_of_cubes)
@@ -44,6 +45,7 @@ int main(void)
 		sum_of_cubes = 0;
 		EmptyTheList(&Variable_bitNum_chain);
 	}
+	system("pause"); 
 	return 0;
 }
 
@@ -53,15 +55,16 @@ void create_bitNum_chain(List *plist, const double i)
 	//  static struct number_chain* Variable_node=(struct number_chain*)malloc(sizeof(struct number_chain));
 	//  Variable_node=head;
 	int Variable_where = 0;
-	double Variable_number = i;
-	while ((Variable_number / 10) != 0)
+	static double Variable_number;
+	Variable_number= i;
+	while (Variable_number != 0)
 	{
 		Item temp;
 		temp.bit_at_where = Variable_where;
 		++Variable_where;
-		temp.bit_is_what = Variable_number - ((Variable_number / 10) * 10);
+		temp.bit_is_what = Variable_number - (floor(Variable_number / 10) * 10);
 		AddItem(temp, plist);   //需要注意 
-		Variable_number = Variable_number / 10;
+		Variable_number =floor(Variable_number / 10);
 		create_bitNum_chain(plist, Variable_number);
 	}
 }
