@@ -1,58 +1,67 @@
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
-typedef struct number_chain
+#include "list.h"
+
+
+void create_bitNum_chain (const List *plist,const double i);
+
+int main(void)
 {
-    int decimal_wei;
-    int number_on_wei;
-    struct number_chain* next;
-}number_chain;
+    List Variable_bitNum_chain;//用于表示100~1000某一数字
+    double MaxSize_num;//用于确定计算范围
 
-
-void create_number_chain_on (struct number_chain* Variable_node,double i)
-{   
-//  static struct number_chain* Variable_node=(struct number_chain*)malloc(sizeof(struct number_chain));
-//  Variable_node=head;
-    int Variable_decimal_wei=0;
-
-    double Variable_number=i;
-    while ((Variable_number/10)!=0)
+    /*初始化    */
+    InitializeList(&Variable_bitNum_chain);
+    if(ListIsFull(&Variable_bitNum_chain))//判断能否为该类节点申请新内存
     {
-        struct number_chain* pnew=(struct number_chain*)malloc(sizeof(struct number_chain));
-        pnew->decimal_wei=Variable_decimal_wei;
-        ++Variable_decimal_wei;
-        pnew->number_on_wei=Variable_number-((Variable_number/10)*10);
-        pnew->next=NULL;
-        Variable_node->next=pnew;
-        Variable_node=Variable_node->next;
+        fprintf(stderr,"No memory available! Bye!\n");
+        exit(1);
     }
-}
 
-int main()
-{
-    double Maxnumber;
-    double cal_number=0;
+    /*获取用户输入并存储*/
+    puts("Enter MaxSize Number:");
+    scanf("%lf",&MaxSize_num);
 
-    scanf("%lf",&Maxnumber);
-    for(double i=0;i<Maxnumber;i++)
+
+    /*运行判断输出结果*/
+    Node* scan;
+    double sum_of_cubes;
+    for(double i=0;i<MaxSize_num;i++)
     {
-        struct number_chain* head=(struct number_chain*)malloc(sizeof(struct number_chain));
-        head->decimal_wei=0;
-        head->number_on_wei=0;
-        head->next=NULL;
+        create_bitNum_chain(Variable_bitNum_chain,i);
 
-        create_number_chain_on(head,i);
-
-        while(head->next!=NULL)
+        scan=Variable_bitNum_chain;
+        while(scan->next!=NULL)
         {
-            head=head->next;
-            cal_number=cal_number+pow (head->number_on_wei,3);
+            sum_of_cubes=sum_of_cubes+pow (scan->bit_is_what,3);
+            scan=scan->next;
         }
-        if(i==cal_number)
+        if(i==sum_of_cubes)
         {
             printf("%lf\n",i);
         }
-        cal_number=0;
+        sum_of_cubes=0;
+        EmptyTheList(Variable_bitNum_chain);
     }
+   return 0;
 }
 
+
+void create_bitNum_chain (const List *plist,const double i)
+{   
+//  static struct number_chain* Variable_node=(struct number_chain*)malloc(sizeof(struct number_chain));
+//  Variable_node=head;
+    int Variable_where=0;
+    double Variable_number=i;
+    while ((Variable_number/10)!=0)
+    {
+        Item temp;
+        temp.bit_at_where=Variable_where;
+        ++Variable_where;
+        temp.bit_is_what=Variable_number-((Variable_number/10)*10);
+        AddItem(temp,plist);   //需要注意 
+        Variable_number=Variable_number/10; 
+        create_bitNum_chain(plist,Variable_number); 
+    }
+}

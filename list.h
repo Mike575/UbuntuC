@@ -6,7 +6,7 @@ struct bitNum_node
 {
     int bit_at_where;/*从个位0开始，依次十位1,百位2等等*/
     int bit_is_what;
-}
+};
 
 typedef struct bitNum_node Item;
 
