@@ -1,16 +1,10 @@
-﻿// shuixianhua.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
-
-
-#include<stdio.h>
+﻿#include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
 #include "list.h"
 
 
-void create_bitNum_chain(const List *plist, const double i);
+void create_bitNum_chain(List *plist, const double i);
 
 int main(void)
 {
