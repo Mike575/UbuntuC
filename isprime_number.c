@@ -1,14 +1,17 @@
 #include<stdio.h>
-
+#include<math.h>
 int isprime (int estimate_number)
 {
     int i=0;
     int s=0;
-    for(i=2;i<estimate_number;i++)
+    int k=0;
+    k=sqrt(estimate_number);
+    for(i=2;i<=k;i++)
     {
         if((estimate_number%i)==0)
         {
-            s=s+1;
+            s=1;
+            break;
         }
     }
     if(s==0){

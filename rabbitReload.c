@@ -1,3 +1,9 @@
+// rabbitFO.c.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -5,6 +11,7 @@
 typedef struct rabbit_node
 {
 	int months_old;
+	double ID;
 	struct rabbit_node* next;
 }rabbit_node;
 
@@ -38,6 +45,7 @@ void Add_rabbit_at(rabbit_node* head)
 	}
 
 	pnew_node->months_old = 0;
+	pnew_node->ID = current->ID + 1;
 	pnew_node->next = NULL;
 	current->next = pnew_node;
 
@@ -81,6 +89,7 @@ void For_eachnode_run(rabbit_node* head, void(*fun)(rabbit_node* current, rabbit
 /**/
 void Init_node(rabbit_node* head)
 {
+	head->ID = 0;
 	head->months_old = 0;
 	head->next = NULL;
 }
@@ -94,13 +103,11 @@ void show_node_number(rabbit_node* head)
 	struct rabbit_node* current;
 	current = (rabbit_node*)malloc(sizeof(rabbit_node));
 	current = head;
-	double count=0;
-    while (current->next != NULL)
+	while (current->next != NULL)
 	{
 		current = current->next;
-        count=count+1;
 	}
-	printf("%f\n", count);
+	printf("%f\n", current->ID);
 	//  free(current);
 }
 
@@ -119,3 +126,4 @@ int main(int argc, char *argv[])
 
 
 }
+ls
