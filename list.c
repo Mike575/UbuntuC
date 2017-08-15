@@ -1,13 +1,14 @@
-#include<stdio.h>
+﻿#include<stdio.h>
 #include<stdlib.h>
 #include "list.h"
+
 
 /*局部函数定义*/
 static void CopyToNode(Item item,Node* pnode);
 
 /*接口函数  */
 /*把链表设置为空*/
-void InitializeList(List* list)
+void InitializeList(List* plist)
 {
     *plist=NULL;
 }
@@ -102,26 +103,3 @@ void EmptyTheList(List* plist)
         *plist=psave;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
