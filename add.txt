@@ -1,0 +1,12 @@
+	.adjlist_Graph.c.swo
+	.adjlist_Graph.c.swp
+	.dos.h.swp
+	BFS_Graph.c
+	Sort/
+	add.txt
+	adjlist_Graph.c
+	adjlist_Graph.out
+	dos.h
+	juzheng_Graph.c
+	music.out
+	music.txt
