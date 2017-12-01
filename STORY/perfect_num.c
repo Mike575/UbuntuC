@@ -11,14 +11,21 @@ int main()
 		n=0;
 		s=a;
 		for(i=1;i<a;i++)
+		{
 			if(a%i==0)
 			{
 				n++;
 				s=s-i;
+				if(s<0)
+					break;
 			}
+		}
 		if(s==0)
 		{
 			printf("%lld IS A PERFECT_NUM,IT OWNS %lld factors\n",a,n);
+		}else
+		{
+			printf("%lld FAILED!\n",a);
 		}
 	}
 	return 0;

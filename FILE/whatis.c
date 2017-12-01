@@ -8,4 +8,7 @@ int main()
 	printf("ASCII 0x32 to:%c\n",0x32);
 	printf("ASCII 97 to:%c\n",97);
 	printf("ASCII '\\032' to:%c\n",'\032');
+	printf("ASCII EOF to:%d\n",EOF);
+	printf("(9)=%d\n",(9));
+	printf("((9))=%d\n",((9)));
 }
